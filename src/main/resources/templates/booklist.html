@@ -1,24 +1,42 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-		xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>Book List</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	</head>
-	<body>
-		<h1>Books</h1>
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Book List</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
+	th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+	<div>
+		<div>
+			<h5 th:inline="text">Welcome
+				[[${#httpServletRequest.remoteUser}]]</h5>
+		</div>
+		<div class="col-md-4" style="padding: 10px 0 50px">
+			<form th:action="@{/logout}" method="post">
+				<input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
+			</form>
+		</div>
+		<div>
+			<h1>Books</h1>
+		</div>
 		<table class="table table-striped">
-		<tr>
-			<th>Author</th>
-			<th>Title</th>
-			<th>ISBN</th>
-			<th>Year</th>
-			<th>Price</th>
-			<th>Category</th>
-			<th></th>
-			<th></th>
-		</tr>
+			<tr>
+				<th>Author</th>
+				<th>Title</th>
+				<th>ISBN</th>
+				<th>Year</th>
+				<th>Price</th>
+				<th>Category</th>
+				<th></th>
+				<th></th>
+			</tr>
 			<tr th:each="book: ${books}">
 				<td th:text="${book.author}"></td>
 				<td th:text="${book.title}"></td>
@@ -26,10 +44,13 @@
 				<td th:text="${book.year}"></td>
 				<td th:text="${book.price}"></td>
 				<td th:text="${book.category.name}"></td>
-				<td><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>
-				<td><a th:href="@{/edit/{id}(id=${book.id})}" class="btn btn-secondary">Edit</a></td>
+				<td sec:authorize="hasAuthority('ADMIN')"><a
+					th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-danger">Delete</a></td>
+				<td><a th:href="@{/edit/{id}(id=${book.id})}"
+					class="btn btn-secondary">Edit</a></td>
 			</tr>
 		</table>
 		<a href="/add" class="btn btn-success">Add Book</a>
-	</body>
+	</div>
+</body>
 </html>

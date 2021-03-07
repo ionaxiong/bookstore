@@ -1,9 +1,9 @@
 package com.example.Bookstore.model;
 
 import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
-public interface BookRepository extends CrudRepository<Book, Long> {
-	
-	List<Book> findById(String id);
+public interface UserRepository extends CrudRepository<User, Long> {
+	User findByUsername(String username);
 }
