@@ -38,6 +38,7 @@ public class BookstoreApplication {
 			BCryptPasswordEncoder bcrypt = new BCryptPasswordEncoder();
 			String userPassword = bcrypt.encode("user");
 			String adminPassword = bcrypt.encode("admin");
+			urepository.deleteAll();
 			User user1 = new User("user", userPassword, "user@user.com", "USER");
 			User user2 = new User("admin", adminPassword, "admin@admin.com", "ADMIN");
 			urepository.save(user1);
